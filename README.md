@@ -1,82 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-    <title></title>
-	<meta charset="utf-8" />
-    <script src="Scripts/jquery-1.9.1.min.js"></script>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="Scripts/isRockFx.js"></script>
-    <script>
-        $(function () {
-            $('#ButtonCal').click(
-                function () {
-                    //取得用戶輸入的參數
-                    var para = { 'height': $('#txbHeight').val(), 'weight': $('#txbWeight').val() };
-                    //呼叫API
-                    ExecuteAPI('Example', 'BMI', para,
-			//呼叫WebAPI成功時運行的Call Back Function
-                        function (result) {
-                            alert(result.Data);
-                        }
-                        );
-                }
-                );
-        });
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadows Nights – FNAF Fanmade</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#00ffcc;
+    font-family: monospace;
+    text-align:center;
+}
+header {
+    padding:50px 10px;
+    border-bottom:2px solid #00ffcc;
+}
+h1 {
+    font-size:30px;
+    letter-spacing:2px;
+}
+.glitch {
+    animation: glitch 1.5s infinite;
+}
+@keyframes glitch {
+    0%{opacity:1;}
+    50%{opacity:0.4;}
+    100%{opacity:1;}
+}
+section {
+    padding:30px 15px;
+}
+.download {
+    display:inline-block;
+    margin-top:30px;
+    padding:20px 35px;
+    font-size:22px;
+    border:2px solid #00ffcc;
+    color:#00ffcc;
+    text-decoration:none;
+    transition: 0.3s;
+}
+.download:hover {
+    background:#00ffcc;
+    color:black;
+    transform: scale(1.05);
+}
+.note {
+    margin-top:15px;
+    font-size:13px;
+    opacity:0.7;
+}
+footer {
+    margin-top:50px;
+    font-size:12px;
+    opacity:0.5;
+}
+</style>
 </head>
+
 <body>
-    <div class="row" style="margin:10px">
-        <div class="col-md-12">
-            <div class="form-group">
-                身高:
-                <input id="txbHeight" class="form-control" placeholder="請輸入身高" />
-                體重:
-                <input id="txbWeight" class="form-control" placeholder="請輸入體重" />
-                <br />
-                <button class="btn btn-primary" id="ButtonCal">計算</button>
-            </div>
-        </div>
+
+<header>
+    <h1 class="glitch">SHADOWS NIGHTS</h1>
+    <p>FNAF Hayran Yapımı Korku Oyunu</p>
+</header>
+
+<section>
+    <p>
+        Gölgeler saklanmaz.<br>
+        <span class="glitch">Işınlanırlar.</span><br>
+        Seni izliyorlar...
+    </p>
+
+    <p>
+        • Shadow karakterler<br>
+        • Işınlanma mekaniği<br>
+        • Kamera & kapı sistemi<br>
+        • Mobil korku deneyimi
+    </p>
+
+    <!-- DİREKT APK İNDİRME BUTONU -->
+    <a class="download" href="ShadowsNights.apk" download>
+        📱 APK İNDİR
+    </a>
+
+    <div class="note">
+        Android 5.0+<br>
+        Kurmak için “Bilinmeyen Kaynaklara İzin Ver”
     </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-    <script src="Scripts/jquery-1.9.1.min.js"></script>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="Scripts/isRockFx.js"></script>
-    <script>
-        $(function () {
-            $('#ButtonCal').click(
-                function () {
-                    //取得用戶輸入的參數
-                    var para = { 'height': $('#txbHeight').val(), 'weight': $('#txbWeight').val() };
-                    //呼叫API
-                    ExecuteAPI('Example', 'BMI', para,
-			//呼叫WebAPI成功時運行的Call Back Function
-                        function (result) {
-                            alert(result.Data);
-                        }
-                        );
-                }
-                );
-        });
-    </script>
-</head>
-<body>
-    <div class="row" style="margin:10px">
-        <div class="col-md-12">
-            <div class="form-group">
-                身高:
-                <input id="txbHeight" class="form-control" placeholder="請輸入身高" />
-                體重:
-                <input id="txbWeight" class="form-control" placeholder="請輸入體重" />
-                <br />
-                <button class="btn btn-primary" id="ButtonCal">計算</button>
-            </div>
-        </div>
-    </div>
+</section>
+
+<footer>
+    <p>
+        Shadows Nights – FNAF Fanmade<br>
+        Bu bir fan yapımı projedir. Scott Cawthon ile bağlantısı yoktur.
+    </p>
+</footer>
+
 </body>
 </html>
