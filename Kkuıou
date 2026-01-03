@@ -1,0 +1,124 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ShadowsNights_AllInOne : MonoBehaviour
+{
+    [Header("Shadow Settings")]
+    public Transform[] shadowSpawnPoints;
+    public GameObject shadowPrefab;
+    public float teleportInterval = 5f;
+
+    [Header("Camera & Door Settings")]
+    public GameObject[] cameras;
+    public GameObject[] doors;
+    public Button[] doorButtons;
+    public Button nextCamButton;
+
+    [Header("Game Settings")]
+    public float nightTime = 60f;
+    public Text timerText;
+    public GameObject winText;
+    public GameObject loseText;
+
+    [Header("Player")]
+    public GameObject player;
+
+    private float timer;
+    private bool gameOver = false;
+    private int currentCam = 0;
+    private GameObject shadowInstance;
+    private float shadowTimer;
+
+    void Start()
+    {
+        timer = nightTime;
+        shadowTimer = teleportInterval;
+
+        if(winText != null) winText.SetActive(false);
+        if(loseText != null) loseText.SetActive(false);
+
+        // Shadow oluştur
+        if(shadowPrefab != null && shadowSpawnPoints.Length > 0)
+        {
+            shadowInstance = Instantiate(shadowPrefab, shadowSpawnPoints[0].position, Quaternion.identity);
+            // Shadow çarpışma ekle
+            if(shadowInstance.GetComponent<Collider>() == null)
+            {
+                shadowInstance.AddComponent<BoxCollider>().isTrigger = true;
+            }
+        }
+
+        // Mobil butonları ayarla
+        if(nextCamButton != null)
+            nextCamButton.onClick.AddListener(ChangeCamera);
+
+        for(int i=0; i<doorButtons.Length; i++)
+        {
+            int index = i;
+            doorButtons[i].onClick.AddListener(()=> ToggleDoor(index));
+        }
+
+        // Başlangıçta sadece ilk kamera aktif
+        for(int i=0; i<cameras.Length; i++)
+            cameras[i].SetActive(i == 0);
+    }
+
+    void Update()
+    {
+        if(gameOver) return;
+
+        // Gece timer
+        timer -= Time.deltaTime;
+        if(timer <= 0f)
+        {
+            timer = 0f;
+            WinGame();
+        }
+        if(timerText != null)
+            timerText.text = "Kalan Süre: " + Mathf.Ceil(timer).ToString() + "s";
+
+        // Shadow ışınlanma
+        shadowTimer -= Time.deltaTime;
+        if(shadowTimer <= 0f && shadowInstance != null && shadowSpawnPoints.Length > 0)
+        {
+            int index = Random.Range(0, shadowSpawnPoints.Length);
+            shadowInstance.transform.position = shadowSpawnPoints[index].position;
+            shadowTimer = teleportInterval;
+            Debug.Log("Shadow ışınlandı!");
+        }
+
+        // Shadow-Player çarpışma
+        if(shadowInstance != null && Vector3.Distance(shadowInstance.transform.position, player.transform.position) < 1f)
+        {
+            LoseGame();
+        }
+    }
+
+    void ChangeCamera()
+    {
+        if(cameras.Length == 0) return;
+        cameras[currentCam].SetActive(false);
+        currentCam = (currentCam + 1) % cameras.Length;
+        cameras[currentCam].SetActive(true);
+    }
+
+    void ToggleDoor(int index)
+    {
+        if(index < doors.Length)
+            doors[index].SetActive(!doors[index].activeSelf);
+    }
+
+    void WinGame()
+    {
+        gameOver = true;
+        if(winText != null) winText.SetActive(true);
+        Debug.Log("Gece bitti! Kazandın!");
+    }
+
+    void LoseGame()
+    {
+        gameOver = true;
+        if(loseText != null) loseText.SetActive(true);
+        Debug.Log("Shadow seni yakaladı! Kaybettin!");
+    }
+}
